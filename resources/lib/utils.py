@@ -3,8 +3,8 @@
 import xbmc
 import xbmcaddon
 
-__addon__     = xbmcaddon.Addon()
-__addon__id__ = __addon__.getAddonInfo('id')
+__addon__id__ = 'script.iptvtool'
+__addon__     = xbmcaddon.Addon(__addon__id__)
 
 CHANNEL_CCTV = [
 	["cctv1",       "CCTV-1 综合"],
