@@ -70,6 +70,11 @@ CHANNEL_PROV = [
 	["zhejiang",    "浙江卫视"],
 ]
 
+CHANNEL_PHNX = [
+	["fenghuang",  "fhws",              "凤凰卫视"],
+	["fenghuang2", "fenghuangzixuntai", "凤凰资讯"],
+]
+
 def log(txt):
     if isinstance (txt,str):
         txt = txt.decode("utf-8")
