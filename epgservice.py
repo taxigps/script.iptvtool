@@ -24,18 +24,18 @@ def updateChannelCCTV(fHandle, channelID, channelName):
         programmes = simplejson.loads(data)[channelID]['program']
 
         #Write channel data
-        fHandle.write('<channel id="{0}">\n'.format(channelID))
-        fHandle.write('<display-name lang="cn">{0}</display-name>\n'.format(channelName))
-        fHandle.write('</channel>\n'.format(channelID))
+        fHandle.write('  <channel id="{0}">\n'.format(channelID))
+        fHandle.write('    <display-name lang="cn">{0}</display-name>\n'.format(channelName))
+        fHandle.write('  </channel>\n'.format(channelID))
 
         #Write programme data
         for entry in programmes:
             startTime = datetime.datetime.fromtimestamp(entry['st'])
             stopTime  = datetime.datetime.fromtimestamp(entry['et'])
 
-            fHandle.write('<programme start="{0}" stop="{1}" channel="{2}">\n'.format(formatDate(startTime), formatDate(stopTime), channelID))
-            fHandle.write('<title lang="cn">{0}</title>\n'.format(entry['t'].encode("utf-8")))
-            fHandle.write('</programme>\n')
+            fHandle.write('  <programme start="{0}" stop="{1}" channel="{2}">\n'.format(formatDate(startTime), formatDate(stopTime), channelID))
+            fHandle.write('    <title lang="cn">{0}</title>\n'.format(entry['t'].encode("utf-8")))
+            fHandle.write('  </programme>\n')
     except Exception:
         log(traceback.format_exc())
 
@@ -52,18 +52,19 @@ def updateChannelPHNX(fHandle, channelID, siteID, channelName):
         programmes = re.compile('<li class="relative cur.*?data-name="([^"]+)" data-mainstars="([\d:]+)-([\d:]+)" data-content="([^"]+)"', re.DOTALL).findall(data)
 
         #Write channel data
-        fHandle.write('<channel id="{0}">\n'.format(channelID))
-        fHandle.write('<display-name lang="cn">{0}</display-name>\n'.format(channelName))
-        fHandle.write('</channel>\n'.format(channelID))
+        fHandle.write('  <channel id="{0}">\n'.format(channelID))
+        fHandle.write('    <display-name lang="cn">{0}</display-name>\n'.format(channelName))
+        fHandle.write('  </channel>\n'.format(channelID))
 
         #Write programme data
         for entry in programmes:
             startTime = dateInChina.replace(hour=int(entry[1].split(':')[0]), minute=int(entry[1].split(':')[1]))
             stopTime  = dateInChina.replace(hour=int(entry[2].split(':')[0]), minute=int(entry[2].split(':')[1]))
 
-            fHandle.write('<programme start="{0}" stop="{1}" channel="{2}">\n'.format(formatDate(startTime), formatDate(stopTime), channelID))
-            fHandle.write('<title lang="cn">{0}</title>\n'.format(entry[0].encode("utf-8")))
-            fHandle.write('</programme>\n')
+            fHandle.write('  <programme start="{0}" stop="{1}" channel="{2}">\n'.format(formatDate(startTime), formatDate(stopTime), channelID))
+            fHandle.write('    <title lang="cn">{0}</title>\n'.format(entry[0].encode("utf-8")))
+            fHandle.write('    <desc lang="cn">{0}</desc>\n'.format(entry[3].encode("utf-8")))
+            fHandle.write('  </programme>\n')
     except Exception:
         log(traceback.format_exc())
 
